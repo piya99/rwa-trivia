@@ -342,6 +342,8 @@ exports.addDefaultLives = async (req, res) => {
 exports.addLives = async (req, res) => {
     const appSetting = await appSettings.getAppSettings();
     if (appSetting.lives.enable) {
+        // this is wrong as it would send serialized promise object
+        // if profile returns nothing it would send any indication back
         res.send(generalAccountService.addLives());
         return;
     }

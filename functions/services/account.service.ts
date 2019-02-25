@@ -53,6 +53,7 @@ exports.getAccounts = async (): Promise<any> => {
  * updated account
  * return ref
  */
+// this function is not about updating but it decrement life by one so it should have that
 exports.updateAccount = async (userId): Promise<any> => {
     try {
         const appSetting = await appSettings.getAppSettings();
@@ -163,6 +164,8 @@ exports.addLives = async (): Promise<any> => {
             const accounts = await accountCollRef.get();
             const accountsNotHavingMaxLives = accounts.docs.filter(d => d.data().lives < maxLives);
             for (const account of accountsNotHavingMaxLives) {
+                // thi logic can be common between insert live function
+                // can be separated as another function 
                 timestamp = utils.getUTCTimeStamp();
                 const userAccount = account.data();
                 const accountRef = accountFireStoreClient.collection(`accounts`).doc(userAccount.id);

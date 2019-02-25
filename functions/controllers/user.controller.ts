@@ -73,7 +73,10 @@ exports.getUserImages = (req, res) => {
 exports.generateUserProfileImage = (req, res) => {
     const profileImagesGenerator: ProfileImagesGenerator = new ProfileImagesGenerator();
     const user = req.body.user;
-
+    // we take user object from request body sent by client
+    // it mean one user can login and then in body use another user data
+    // as user is logged in it will pass authorize user midelware and pass security
+    // we need to check whether req.user.id and requ.body.user.userId match
     if (user.profilePicture && user.croppedImageUrl && user.originalImageUrl) {
 
         profileImagesGenerator.
@@ -107,6 +110,8 @@ function setUser(user, res) {
 }
 
 exports.updateLives = (req, res) => {
+    // should not take it form param
+    // needs to take from req.user.id
     const userId = req.params.userId;
     if (!userId) {
         res.status(400).send('Bad Request');
