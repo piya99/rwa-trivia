@@ -36,9 +36,11 @@ All APIs required to be called in scheduler should be under  /schedule route
 Put comment on top under which circumstances this end point should be called
 
 Rule-5 - Promises
-use Await/Async where possible and avoid chaining of profiles
+use Await/Async where possible and avoid chaining of promises
+use promise.all when promise do not need to be executed in sequence
+use for of loop instead of array.map function becuase it has better try catch support and await is supported in for of loop
 Ensure promises are always resolved or rejected from function
-with Away/Async use try and catch blocks,  when you cache error and return error it handled as reject, you use throw as well
+with Away/Async use try and catch blocks,  when you cache error and return error it handled as reject, you can use throw as well
 
 Rule-6 Firebase http/db trigger
 always ensure that http routes must always send response to complete http trigger, either it could be any response from ok to error
@@ -55,7 +57,7 @@ It should only work on data that is in memory.
 
 Service
 should contain all function that interact with firestore db including any business logic that update documents.
-it should try to hide how document properties are updated
+it should try to hide how document properties are updated to outside/caller
 
 Rule - 8  Generating statistics
 generation of statistic can be triggered from API call, DB trigger
@@ -70,10 +72,10 @@ Always use ES6 import/export ,lets not mix it with require use require when ther
 
 Rule - 11
 Always use class construct
-when object is not required add method as static then it could be used with creating instance
-All controller should have static methods
-avoid having member variables (this.xxxx) as it may cause data sharing problems,
-when it is safer to create instance of class export instance of class rather than class it self
+when object is not required add method as static then it could be used without creating instance of class
+All controller class should have static methods to handle request and response
+Avoid having member variables (this.xxxx) as it may cause data sharing problems
+when it is safer to create instance of class export instance of class rather than exporting class itself to have singlton effect
 */
 
 router.use(`/${appConstants.API_PREFIX}/question`, questionRoutes);
